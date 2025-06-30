@@ -167,6 +167,13 @@ public class AuctionCommand implements CommandExecutor {
                     return true;
                 }
 
+                // 世界黑名单判断
+                List<String> worldBlacklist = config.getStringList("Settings.World-Command-Blacklist");
+                if (worldBlacklist != null && worldBlacklist.contains(player.getWorld().getName())) {
+                    player.sendMessage(Messages.WORLD_COMMAND_BLOCKED.getMessage(player));
+                    return true;
+                }
+
                 if (args.length >= 2) {
                     if (args[0].equalsIgnoreCase("sell")) {
                         if (!crazyManager.isSellingEnabled()) {

@@ -308,3 +308,6 @@ Settings:
     - 'END_PORTAL_FRAME'
   PDC-BlackList:
     - 'mcmmo:super_ability_boosted'
+  World-Command-Blacklist:
+    - 'world_nether'
+    - 'world_the_end'

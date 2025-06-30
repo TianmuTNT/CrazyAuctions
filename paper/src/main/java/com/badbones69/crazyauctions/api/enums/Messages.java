@@ -49,6 +49,7 @@ public enum Messages {
     CRAZYAUCTIONS_VIEW("CrazyAuctions-View", "&c/ah view <player>"),
     CRAZYAUCTIONS_SELL_BID("CrazyAuctions-Sell-Bid", "&c/ah sell/bid <price> [amount of items]"),
     BOOK_NOT_ALLOWED("Book-Not-Allowed", "&cThat book is not able to be sold in this auction house!"),
+    WORLD_COMMAND_BLOCKED("World-Command-Blocked", "&c你所在的世界禁止使用该命令。"),
     HELP("Help-Menu", Arrays.asList(
     "&e-- &6Crazy Auctions Help &e--",
     "&9/Ah - &eOpens the crazy auction.",
