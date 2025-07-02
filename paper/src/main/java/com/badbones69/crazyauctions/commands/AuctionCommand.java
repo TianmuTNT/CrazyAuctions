@@ -50,6 +50,13 @@ public class AuctionCommand implements CommandExecutor {
                 return true;
             }
 
+            // 世界黑名单判断
+            List<String> worldBlacklist = config.getStringList("Settings.World-Command-Blacklist");
+            if (worldBlacklist != null && worldBlacklist.contains(player.getWorld().getName())) {
+                player.sendMessage(Messages.WORLD_COMMAND_BLOCKED.getMessage(player));
+                return true;
+            }
+
             if (config.contains("Settings.Category-Page-Opens-First")) {
                 if (config.getBoolean("Settings.Category-Page-Opens-First")) {
                     GuiListener.openCategories(player, ShopType.SELL);
