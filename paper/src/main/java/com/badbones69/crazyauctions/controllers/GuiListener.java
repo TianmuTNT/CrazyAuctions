@@ -438,7 +438,7 @@ public class GuiListener implements Listener {
 
         Inventory inv = new AuctionMenu(27, Methods.color(config.getString("Settings.Bidding-On-Item"))).getInventory();
 
-        if (!bidding.containsKey(player.getUniqueId())) bidding.put(player.getUniqueId(), 0);
+        if (!bidding.containsKey(player.getUniqueId())) bidding.put(player.getUniqueId(), Integer.valueOf(Methods.getPrice(ID, false)));
 
         inv.setItem(9, new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setName("&a+1").setAmount(1).build());
         inv.setItem(10, new ItemBuilder().setMaterial(Material.LIME_STAINED_GLASS_PANE).setName("&a+10").setAmount(1).build());
@@ -671,7 +671,7 @@ public class GuiListener implements Listener {
         ItemStack item = clickEvent.getCurrentItem();
 
         if (item == null) return;
-        
+
         if (!item.hasItemMeta()) return;
 
         if (auctionMenu.getTitle().contains(config.getString("Settings.Categories"))) {
@@ -1086,18 +1086,29 @@ public class GuiListener implements Listener {
                         return;
                     }
 
-                    cost -= (long) (cost * config.getDouble("Settings.Percent-Tax", 0) / 100);
+                    String price = String.valueOf(cost);
+
+                    long taxAmount = (long) (cost * config.getDouble("Settings.Percent-Tax", 0) / 100);
+                    cost -= taxAmount;
 
                     cost = Math.max(0, cost);
 
-                    support.addMoney(Methods.getOfflinePlayer(seller), cost);
+                    OfflinePlayer sellerPlayer = Methods.getOfflinePlayer(seller);
+                    support.addMoney(sellerPlayer, cost);
 
-                    String price = String.valueOf(cost);
+                    String tax = String.valueOf(taxAmount);
+                    String taxedPrice = String.valueOf(cost);
 
                     placeholders.put("%Price%", price);
                     placeholders.put("%price%", price);
+                    placeholders.put("%Tax%", tax);
+                    placeholders.put("%tax%", tax);
+                    placeholders.put("%Taxed_Price%", taxedPrice);
+                    placeholders.put("%taxed_price%", taxedPrice);
                     placeholders.put("%Player%", player.getName());
                     placeholders.put("%player%", player.getName());
+                    placeholders.put("%Seller%", sellerPlayer.getName());
+                    placeholders.put("%seller%", sellerPlayer.getName());
 
                     player.sendMessage(Messages.BOUGHT_ITEM.getMessage(player, placeholders));
 
